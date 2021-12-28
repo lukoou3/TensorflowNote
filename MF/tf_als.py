@@ -11,7 +11,8 @@ from tensorflow.keras.regularizers import l2
 from sklearn.utils import shuffle
 
 def get_data():
-    df = pd.read_csv("../data/ua.base", sep="\t", header=None, names=["user_id", "movie_id", "rating", "ts"])
+    #df = pd.read_csv("../data/ua.base", sep="\t", header=None, names=["user_id", "movie_id", "rating", "ts"])
+    df = pd.read_csv("../data/ml-1m/ratings.dat", sep="::", header=None, names=["user_id", "movie_id", "rating", "ts"])
     #df = pd.read_csv(r"D:\kaggle-data\ml-1m\ratings.dat", sep="::", header=None, names=["user_id", "movie_id", "rating", "ts"])
     df = shuffle(df).reset_index(drop=True)
     print(df.dtypes)
