@@ -71,6 +71,12 @@ def get_data():
     return df
 
 def test():
+    """
+    https://zhuanlan.zhihu.com/p/136253355: 实践DSSM召回模型
+    https://www.jianshu.com/p/7d4c65a66cac: 推荐系统论文阅读（七)-借鉴DSSM构建双塔召回模型
+    https://github.com/shenweichen/DeepMatch: 大佬用tf实现的一些召回模型
+    :return:
+    """
     df = get_data()
 
     print(df.label.value_counts())
