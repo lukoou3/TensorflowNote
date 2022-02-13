@@ -75,14 +75,17 @@ class DIN(Model):
         mask = tf.cast(tf.not_equal(seq_inputs[:, :, 0], 0), dtype=tf.float32)  # (None, maxlen)
         # other
         other_info = dense_inputs
+        # other_info就是dense_inputs和sparse_inputs embedding后的向量拼接后的向量
         for i in range(self.other_sparse_len):
             other_info = tf.concat([other_info, self.embed_sparse_layers[i](sparse_inputs[:, i])], axis=-1)
 
         # seq, item embedding and category embedding should concatenate
+        # behavior_num可以包含多个(item_id, cate_id), embedding后拼接
         seq_embed = tf.concat([self.embed_seq_layers[i](seq_inputs[:, :, i]) for i in range(self.behavior_num)], axis=-1)
         item_embed = tf.concat([self.embed_seq_layers[i](item_inputs[:, i]) for i in range(self.behavior_num)], axis=-1)
     
         # att
+        # attention
         user_info = self.attention_layer([item_embed, seq_embed, seq_embed, mask])  # (None, d * 2)
 
         # concat user_info(att hist), cadidate item embedding, other features
@@ -91,13 +94,15 @@ class DIN(Model):
         else:
             info_all = tf.concat([user_info, item_embed], axis=-1)
 
+        # BatchNormalization
         info_all = self.bn(info_all)
 
-        # ffn
+        # ffn, ffn_hidden_units=(80, 40)
         for dense in self.ffn:
             info_all = dense(info_all)
 
         info_all = self.dropout(info_all)
+        # dense_final = Dense(1)
         outputs = tf.nn.sigmoid(self.dense_final(info_all))
         return outputs
 

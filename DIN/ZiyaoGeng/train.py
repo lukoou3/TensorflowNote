@@ -34,7 +34,7 @@ if __name__ == '__main__':
 
     learning_rate = 0.001
     batch_size = 4096
-    epochs = 5
+    epochs = 10
     # ========================== Create dataset =======================
     feature_columns, behavior_list, train, val, test = create_amazon_electronic_dataset(file, embed_dim, maxlen)
     train_X, train_y = train
@@ -52,6 +52,8 @@ if __name__ == '__main__':
     model.compile(loss=binary_crossentropy, optimizer=Adam(learning_rate=learning_rate),
                   metrics=[AUC()])
     # ===========================Fit==============================
+    print("train_X.shape:", [x.shape for x in train_X])
+    print("train_y.shape:", train_y.shape)
     model.fit(
         train_X,
         train_y,

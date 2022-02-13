@@ -24,6 +24,8 @@ if __name__ == "__main__":
         data[feature] = lbe.fit_transform(data[feature]) + 1
         feature_max_idx[feature] = data[feature].max() + 1
 
+    print(feature_max_idx)
+
     user_profile = data[["user_id", "gender", "age", "occupation", "zip"]].drop_duplicates('user_id')
 
     item_profile = data[["movie_id"]].drop_duplicates('movie_id')
@@ -63,6 +65,7 @@ if __name__ == "__main__":
     #model = MIND(user_feature_columns,item_feature_columns,dynamic_k=False,p=1,k_max=2,num_sampled=5,user_dnn_hidden_units=(64, embedding_dim))
 
     model.compile(optimizer="adam", loss=sampledsoftmaxloss)  # "binary_crossentropy")
+    model.summary()
 
     history = model.fit(train_model_input, train_label,  # train_label,
                         batch_size=256, epochs=10, verbose=1, validation_split=0.0, )
