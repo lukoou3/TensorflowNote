@@ -172,7 +172,7 @@ def test():
 
     model.summary()
 
-    history = model.fit(X, y, batch_size=4096, epochs=40, validation_split=0.2)
+    history = model.fit(X, y, batch_size=245, epochs=40, validation_split=0.2)
 
 if __name__ == '__main__':
     test()
