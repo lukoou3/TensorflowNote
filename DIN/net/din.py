@@ -14,7 +14,7 @@ DenseFeature = namedtuple('DenseFeature', ['name', 'dimension'])
 VarLenSparseFeature = namedtuple('VarLenSparseFeature', ['name', 'vocabulary_size', 'embedding_size', 'maxlen'])
 
 ##### 数据预处理
-data = pd.read_csv('./data/movie_sample.txt', sep="\t", header=None)
+data = pd.read_csv('../../data/movie_sample.txt', sep="\t", header=None)
 data.columns = ["user_id", "gender", "age", "hist_movie_id", "hist_len", "movie_id", "movie_type_id", "label"]
 data.head()
 
@@ -255,4 +255,4 @@ model.compile(optimizer="adam",
               metrics=["binary_crossentropy", tf.keras.metrics.AUC(name='auc')])
 
 model.fit(X_train, y_train,
-          batch_size=64, epochs=5, validation_split=0.2)
+          batch_size=64, epochs=10, validation_split=0.1)
